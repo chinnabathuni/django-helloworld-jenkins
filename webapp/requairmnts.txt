@@ -1,0 +1,4 @@
+Django==5.1.2
+pytest==8.0.0
+pytest-django==4.7.0
+gunicorn==22.0.0
