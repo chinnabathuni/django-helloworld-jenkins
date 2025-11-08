@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -9,11 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-<<<<<<< HEAD
                 git branch: 'main', url: 'https://github.com/chinnabathuni/django-helloworld-jenkins.git'
-=======
-                git branch: 'main', url: 'https://github.com/<your-username>/django-helloworld-jenkins.git'
->>>>>>> b8fd86d (auto trigger test)
             }
         }
 
