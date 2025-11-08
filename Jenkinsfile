@@ -33,15 +33,27 @@ pipeline {
         }
 
         stage('Deploy') {
-            steps {
-                sh '''
-                echo "Deploying Django app..."
-                pkill -f gunicorn || true
-                source $VENV_DIR/bin/activate
-                nohup gunicorn helloworld.wsgi:application --bind 0.0.0.0:8000 &
-                '''
-            }
-        }
+    steps {
+        sh '''
+        echo "Deploying Django app..."
+        # Stop any existing Gunicorn processes
+        pkill -f gunicorn || true
+
+        # Activate the virtual environment
+        source $VENV_DIR/bin/activate
+
+        # Apply migrations (optional)
+        python manage.py migrate
+
+        # Collect static files (optional)
+        python manage.py collectstatic --noinput
+
+        # Restart the Django app
+        nohup gunicorn helloworld.wsgi:application --bind 0.0.0.0:8000 > gunicorn.log 2>&1 &
+        '''
+    }
+}
+
     }
 
     post {
